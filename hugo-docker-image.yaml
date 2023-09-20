@@ -1,0 +1,24 @@
+namespace: hugo-docker-image
+hugo-docker-image:
+  defines: runnable
+  metadata:
+    name: hugo-docker-image
+    description: A Docker image for fast, flexible static site generation with Hugo.
+    icon: https://www.docker.com/favicon.ico
+  containers:
+    hugo-docker-image:
+      build: .
+  services:
+    hugo-server:
+      container: hugo-docker-image
+      port: 1313
+      host-port: 1313
+      publish: false
+      protocol: TCP
+      description: The port exposed for Hugo server for local website serving.
+  variables:
+    version:
+      env: VERSION
+      type: string
+      description: The version of Hugo to be installed in the Docker image.
+      value: 0.55.0
