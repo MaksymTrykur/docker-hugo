@@ -1,0 +1,27 @@
+namespace: hugo-docker-image
+hugo-docker-image:
+  defines: runnable
+  metadata:
+    name: hugo-docker-image
+    description: >-
+      A lightweight Docker image based on Alpine, used for running Hugo - a fast
+      and flexible static site generator written in Go.
+    icon: https://emojiapi.dev/api/v1/whale.svg
+  containers:
+    hugo-docker-image:
+      build: .
+      dockerfile: Dockerfile
+  services:
+    hugo-server:
+      container: hugo-docker-image
+      port: 1313
+      host-port: 1313
+      publish: false
+      protocol: TCP
+      description: Hugo server's port for viewing the static site locally
+  variables:
+    version:
+      env: VERSION
+      type: string
+      description: Version of Hugo to be installed
+      value: 0.55.0
