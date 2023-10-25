@@ -1,0 +1,2 @@
+REPO hugo-docker-image
+LOAD hugo-docker-image.yaml
