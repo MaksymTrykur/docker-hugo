@@ -1,0 +1,27 @@
+namespace: hugo-docker-image
+hugo-docker-image:
+  defines: runnable
+  metadata:
+    name: hugo-docker-image
+    description: >-
+      A Lightweight Docker Image for Hugo, a fast and flexible static site
+      generator, written in Go. Comes with rsync for Continuous Deployment.
+    icon: https://gohugo.io/favicon.ico
+  containers:
+    hugo-docker-image:
+      build: .
+      dockerfile: Dockerfile
+  services:
+    hugo:
+      container: hugo-docker-image
+      port: 1313
+      host-port: 1313
+      publish: false
+      protocol: TCP
+      description: Hugo server port
+  variables:
+    version:
+      env: VERSION
+      type: string
+      description: Hugo version
+      value: '0.55'
