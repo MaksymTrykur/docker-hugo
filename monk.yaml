@@ -1,0 +1,5 @@
+namespace: docker-hugo
+
+stack:
+  defines: group
+  members: []
