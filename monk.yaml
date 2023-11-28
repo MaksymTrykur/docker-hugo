@@ -1,0 +1,45 @@
+namespace: docker-hugo
+
+hugo-builder-extras:
+  defines: runnable
+  metadata:
+    name: hugo-builder-extras
+    description: Extended Docker image for Hugo with additional tools and packages.
+    icon: https://emojiapi.dev/api/v1/robot.svg
+  containers:
+    hugo-builder-extras:
+      image: env-2055.registry.local/hugo-builder-extras:master-c05479f
+      build: .
+      dockerfile: extras/Dockerfile
+  services:
+    hugo-server:
+      description: Hugo server port for serving the website locally.
+      container: hugo-builder-extras
+      port: 1313
+      host-port: 1313
+      publish: true
+      protocol: tcp
+  connections:
+    ssh-deployment:
+      target: docker-hugo/remote-server
+      service: '!!!SETME!!!'
+      optional: true
+      description: >-
+        Connection to a remote server for deploying the Hugo site using rsync
+        and SSH.
+  variables:
+    ssh-port:
+      env: SSH_PORT
+      type: int
+      value: <- connection-port("ssh-deployment")
+      description: SSH port for rsync deployment to the remote server.
+    ssh-hostdest:
+      env: SSH_HOSTDEST
+      type: string
+      value: <- connection-hostname("ssh-deployment")
+      description: SSH host destination for rsync deployment to the remote server.
+
+stack:
+  defines: group
+  members:
+    - docker-hugo/hugo-builder-extras
