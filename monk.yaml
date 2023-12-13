@@ -1,0 +1,28 @@
+namespace: docker-hugo
+
+hugo-builder-extras:
+  defines: runnable
+  metadata:
+    name: hugo-builder-extras
+    description: Hugo static site generator with additional tools for syntax highlighting.
+    icon: https://emojiapi.dev/api/v1/robot.svg
+  containers:
+    hugo-builder-extras:
+      image: env-4213.registry.local/hugo-builder-extras:master-c05479f
+      build: .
+      dockerfile: extras/Dockerfile
+  services:
+    hugo-server:
+      description: Port for Hugo server to serve the site locally
+      container: hugo-builder-extras
+      port: 1313
+      host-port: 1313
+      publish: true
+      protocol: tcp
+  connections: {}
+  variables: {}
+
+stack:
+  defines: group
+  members:
+    - docker-hugo/hugo-builder-extras
